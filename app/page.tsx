@@ -1,29 +1,10 @@
-import { Navigation } from "@/components/navigation"
-import { Hero } from "@/components/hero"
-import { Overview } from "@/components/overview"
-import { Background } from "@/components/background"
-import { CorePrinciple } from "@/components/core-principle"
-import { Results } from "@/components/results"
-import { Usage } from "@/components/usage"
-import { Future } from "@/components/future"
-import { FAQ } from "@/components/faq"
-import { Resources } from "@/components/resources"
-import { Footer } from "@/components/footer"
+import type { Metadata } from "next"
 
-export default function Home() {
-  return (
-    <main className="min-h-screen bg-background">
-      <Navigation />
-      <Hero />
-      <Overview />
-      <Background />
-      <CorePrinciple />
-      <Results />
-      <Usage />
-      <Future />
-      <FAQ />
-      <Resources />
-      <Footer />
-    </main>
-  )
+import { HomePage } from "@/components/home-page"
+import { DEFAULT_LOCALE, getSiteContent } from "@/lib/site-content"
+
+export const metadata: Metadata = getSiteContent(DEFAULT_LOCALE).meta
+
+export default function Page() {
+  return <HomePage locale={DEFAULT_LOCALE} />
 }
