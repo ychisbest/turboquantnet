@@ -2,11 +2,13 @@ import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
 
 import "./globals.css"
+import { getSiteUrl } from "@/lib/site-url"
 
 export const metadata: Metadata = {
   title: "TurboQuant - Extreme Compression for AI Efficiency",
   description:
     "TurboQuant is an online vector quantization algorithm for compressing KV cache with minimal accuracy loss and large memory savings.",
+  metadataBase: new URL(getSiteUrl()),
   generator: "v0.app",
   icons: {
     icon: [
