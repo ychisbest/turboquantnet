@@ -150,7 +150,7 @@ export type SiteContent = {
     title: string
     items: Array<{ title: string; description: string; url: string; type: "blog" | "paper" }>
     communityTitle: string
-    communities: Array<{ name: string; description: string }>
+    communities: Array<{ name: string; description: string; url: string }>
     note: string
   }
   footer: {
@@ -536,9 +536,21 @@ v_quant = turboquant_quant(v)
       items: sharedResources,
       communityTitle: "Community discussion",
       communities: [
-        { name: "Reddit r/LocalLLaMA", description: "Community discussion around local LLM deployment" },
-        { name: "X (Twitter) #TurboQuant", description: "Ongoing reactions and commentary" },
-        { name: "llama.cpp #20969", description: "Main integration discussion thread" },
+        {
+          name: "Reddit r/LocalLLaMA",
+          description: "Community discussion around local LLM deployment",
+          url: "https://www.reddit.com/r/LocalLLaMA/comments/1s2su28/google_research_turboquant_redefining_ai/",
+        },
+        {
+          name: "X (Twitter) discussion",
+          description: "Ongoing reactions and commentary",
+          url: "https://x.com/Prince_Canuma/status/2036611007523512397",
+        },
+        {
+          name: "llama.cpp #20969",
+          description: "Main integration discussion thread",
+          url: "https://github.com/ggml-org/llama.cpp/discussions/20969",
+        },
       ],
       note: "Note: the GitHub project cg94301/turboquant is unrelated. It is a trading strategy project, not this algorithm.",
     },
@@ -834,9 +846,21 @@ v_quant = turboquant_quant(v)
       ],
       communityTitle: "社区讨论",
       communities: [
-        { name: "Reddit r/LocalLLaMA", description: "本地 LLM 部署相关讨论" },
-        { name: "X (Twitter) #TurboQuant", description: "最新动态和讨论" },
-        { name: "llama.cpp #20969", description: "主要集成讨论帖" },
+        {
+          name: "Reddit r/LocalLLaMA",
+          description: "本地 LLM 部署相关讨论",
+          url: "https://www.reddit.com/r/LocalLLaMA/comments/1s2su28/google_research_turboquant_redefining_ai/",
+        },
+        {
+          name: "X (Twitter) discussion",
+          description: "最新动态和讨论",
+          url: "https://x.com/Prince_Canuma/status/2036611007523512397",
+        },
+        {
+          name: "llama.cpp #20969",
+          description: "主要集成讨论帖",
+          url: "https://github.com/ggml-org/llama.cpp/discussions/20969",
+        },
       ],
       note: "注意：GitHub 上的 cg94301/turboquant 与本文算法无关，那是交易策略项目。",
     },

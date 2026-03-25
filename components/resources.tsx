@@ -46,10 +46,21 @@ export function Resources({ content }: { content: SiteContent["resources"] }) {
             </div>
             <div className="grid md:grid-cols-3 gap-6">
               {content.communities.map((community) => (
-                <div key={community.name} className="p-4 bg-secondary/50 rounded-lg">
-                  <h4 className="font-medium mb-1 text-foreground">{community.name}</h4>
-                  <p className="text-sm text-muted-foreground">{community.description}</p>
-                </div>
+                <a
+                  key={community.name}
+                  href={community.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
+                >
+                  <div className="p-4 bg-secondary/50 rounded-lg border border-transparent hover:border-primary/40 transition-colors h-full">
+                    <h4 className="font-medium mb-1 text-foreground group-hover:text-primary transition-colors">
+                      {community.name}
+                      <ExternalLink className="w-4 h-4 inline ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </h4>
+                    <p className="text-sm text-muted-foreground">{community.description}</p>
+                  </div>
+                </a>
               ))}
             </div>
           </CardContent>
