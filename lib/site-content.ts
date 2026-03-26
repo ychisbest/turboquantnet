@@ -34,6 +34,26 @@ export type SiteContent = {
     turboItems: string[]
     papers: Array<{ venue: string; title: string; description: string; url: string; linkLabel: string }>
   }
+  recent: {
+    eyebrow: string
+    title: string
+    description: string
+    latestTitle: string
+    latest: Array<{ date: string; title: string; description: string }>
+    impactTitle: string
+    impacts: Array<{ label: string; value: string; description: string }>
+  }
+  expert: {
+    eyebrow: string
+    title: string
+    description: string
+    comments: Array<{
+      author: string
+      role: string
+      summary: string
+      paragraphs: string[]
+    }>
+  }
   background: {
     eyebrow: string
     title: string
@@ -272,6 +292,71 @@ export const siteContent: Record<Locale, SiteContent> = {
           description: "Two-stage design with near-optimal distortion",
           url: "https://arxiv.org/pdf/2504.19874",
           linkLabel: "arXiv: 2504.19874",
+        },
+      ],
+    },
+    recent: {
+      eyebrow: "Recent Updates",
+      title: "Latest momentum around TurboQuant",
+      description:
+        "The paper release quickly turned into implementation work, deployment discussion, and practical evaluation around long-context inference.",
+      latestTitle: "Latest updates",
+      latest: [
+        {
+          date: "March 2026",
+          title: "Google Research formally introduced TurboQuant",
+          description: "The release framed TurboQuant as a near-optimal online quantization method for both KV cache compression and vector search.",
+        },
+        {
+          date: "March 2026",
+          title: "Community integration threads started immediately",
+          description: "Open-source discussion moved quickly into how TurboQuant could land in inference stacks such as llama.cpp and related runtimes.",
+        },
+        {
+          date: "March 2026",
+          title: "Attention shifted from theory to deployment economics",
+          description: "The core discussion became whether 3-bit, zero-loss KV compression changes the memory and latency budget for long-context serving.",
+        },
+      ],
+      impactTitle: "Why it matters",
+      impacts: [
+        {
+          label: "Serving cost",
+          value: "6x+ lower KV memory",
+          description: "That materially changes how many concurrent long-context sessions fit on a single accelerator.",
+        },
+        {
+          label: "Latency path",
+          value: "Up to 8x faster attention",
+          description: "The result matters not only for storage efficiency, but for the attention hot path under long sequences.",
+        },
+        {
+          label: "Ecosystem signal",
+          value: "High implementation interest",
+          description: "The immediate follow-up discussion suggests strong pressure for adoption in practical inference tooling.",
+        },
+      ],
+    },
+    expert: {
+      eyebrow: "Expert Commentary",
+      title: "A practical read on what TurboQuant changes",
+      description: "One expert view on what is likely already deployed, what still remains hard, and why the paper matters even if most easy gains are gone.",
+      comments: [
+        {
+          author: "Independent Industry Expert",
+          role: "LLM systems and inference engineering",
+          summary: "TurboQuant matters less because it saves a bit more memory, and more because it marks where KV-cache compression starts to hit a real boundary.",
+          paragraphs: [
+            "KV cache has long been the largest source of memory consumption in large-model inference. What this paper does, in essence, is compress that data in a way that approaches the information-theoretic optimum. It is not just lowering precision. It is reallocating information density: ordinary regions are represented with extremely low bits, while outliers retain higher precision. At the same time, the method stops treating values independently and instead encodes them at the vector level, which fits the inner-product structure of attention itself.",
+            "The critical point is that its error is already close to the information-theoretic lower bound, the Shannon limit. That means compression efficiency is already near the theoretical ceiling. The paper reports roughly 4x to 4.5x compression with little visible performance loss. The result is strong, but it also suggests there is not much room left for further compression without harming model quality.",
+            "Given how large-tech internal R&D usually works, the optimization effects implied by the paper were likely absorbed in stages before publication. Low-bit quantization has already been widely deployed, from int8 to int4 and beyond, across mainstream inference stacks. Separate handling for outliers is also not new: methods such as SmoothQuant and AWQ are already doing closely related things. KV-cache compression itself, sliding windows, and hierarchical cache designs are already standard practice in large-model systems.",
+            "What likely has not fully landed yet is the most extreme part of the paper: vector quantization and coding schemes that move closer to the information-theoretic limit. The barrier is not theory, but implementation. These methods are less GPU-friendly, harder to keep low-latency, and more difficult to stabilize and generalize in production, so they may take much longer to ship.",
+            "If I had to estimate roughly how much of the paper's benefit is already reflected in deployed systems, it would look something like this: the earliest KV cache starts at 1x cost; basic quantization gets to around 2x to 3x compression; adding outlier-aware handling can reach about 3x to 4x; the paper pushes that further to around 4x to 4.5x. In other words, most of the easy gains have already been captured. What remains is smaller in upside and increasingly expensive to realize.",
+            "The reason is straightforward. Early compression removes redundancy. Later compression starts to hit effective information, so every additional step has a much higher chance of hurting model capability. Error no longer degrades smoothly; beyond a certain point, it can worsen quickly. Engineering difficulty also does not grow linearly. It rises sharply.",
+            "You can infer from current model behavior that mainstream systems are already using many of these ideas. Better long-context behavior, lower inference cost, and stable performance all suggest that KV-cache efficiency has already been significantly improved. A team at Google's level has very likely already deployed low-bit quantization, outlier handling, and at least part of KV-cache compression.",
+            "That means if this Google paper has an impact on storage, much of that impact has probably already shown up. The parts that have not shown up yet will likely be harder to implement than the gains that came before.",
+            "More importantly, the significance of the paper is not just how much more memory it saves. It gives us a boundary. KV-cache compression is approaching its limit, and the remaining room is narrow. The next major change is unlikely to come from compression alone. It will require finding a different path.",
+          ],
         },
       ],
     },
@@ -604,6 +689,70 @@ v_quant = turboquant_quant(v)
         { venue: "AISTATS 2026", title: "PolarQuant", description: "极坐标变换核心，消除归一化开销", url: "https://arxiv.org/pdf/2502.02617", linkLabel: "arXiv: 2502.02617" },
         { venue: "AAAI 2025", title: "QJL", description: "1-bit 无偏内积估计器", url: "https://dl.acm.org/doi/10.1609/aaai.v39i24.34773", linkLabel: "ACM DL" },
         { venue: "ICLR 2026", title: "TurboQuant", description: "两阶段整合，实现近最优失真率", url: "https://arxiv.org/pdf/2504.19874", linkLabel: "arXiv: 2504.19874" },
+      ],
+    },
+    recent: {
+      eyebrow: "最近动态",
+      title: "TurboQuant 最近的进展和外溢影响",
+      description: "论文发布后，讨论很快从理论创新转向工程接入、推理部署和长上下文成本模型。",
+      latestTitle: "最新动态",
+      latest: [
+        {
+          date: "2026 年 3 月",
+          title: "Google Research 正式发布 TurboQuant",
+          description: "官方把它定义为接近信息论最优的在线量化方法，同时覆盖 KV Cache 压缩和向量检索场景。",
+        },
+        {
+          date: "2026 年 3 月",
+          title: "社区很快进入集成讨论阶段",
+          description: "开源社区开始讨论 TurboQuant 如何落到 llama.cpp 等推理栈和相关运行时中。",
+        },
+        {
+          date: "2026 年 3 月",
+          title: "关注点转向部署收益",
+          description: "讨论重点逐渐变成 3-bit 零损 KV 压缩是否会重写长上下文服务的内存与时延预算。",
+        },
+      ],
+      impactTitle: "带来的影响",
+      impacts: [
+        {
+          label: "服务成本",
+          value: "KV 内存下降 6x+",
+          description: "这会直接改变单卡能承载的长上下文并发规模。",
+        },
+        {
+          label: "时延链路",
+          value: "注意力最快提升 8x",
+          description: "影响的不只是存储成本，也包括长序列下最核心的 attention 热路径。",
+        },
+        {
+          label: "生态信号",
+          value: "实现意愿很强",
+          description: "发布后的快速跟进说明它很可能进入实际推理工具链，而不只是停留在论文层面。",
+        },
+      ],
+    },
+    expert: {
+      eyebrow: "专家评论",
+      title: "从工程视角看 TurboQuant 到底改变了什么",
+      description: "重点解释哪些红利可能已经被工程吃掉，哪些部分仍然难以真正落地，以及这篇论文真正划出的边界。",
+      comments: [
+        {
+          author: "独立行业专家",
+          role: "大模型系统与推理工程",
+          summary: "TurboQuant 的意义，不只是再多省一点内存，而是告诉我们 KV cache 压缩这条路已经接近一条清晰边界。",
+          paragraphs: [
+            "KV cache 一直是大模型推理里的最大内存消耗来源。论文的做法，本质是用信息论最优的方式去压缩这些数据。不是简单地降低精度，而是重新分配信息密度。普通部分用极低比特表示，异常值单独保留更高精度。同时不再逐元素处理，而是以向量为单位编码，因为 attention 本身就是内积结构。",
+            "关键的是，它的误差已经贴近信息论下界，也就是香农极限。这意味着它的压缩效率已经非常接近理论极限。论文里给出的结果，大致是 4 到 4.5 倍的压缩，性能几乎没有明显损失。效果很明显，但后续再压缩而不损伤性能的可能性已经很小。",
+            "基于大科技公司的内部研发流程，论文的方法以及可能带来的优化效果，很可能已经被工程上分阶段吃掉了。比如低比特量化早就被广泛使用，从 int8 到 int4，再到更低精度，主流模型在推理侧基本都已经在用。异常值单独处理这件事也不是新东西，SmoothQuant、AWQ 这些方法本质上都在做类似的事情。KV cache 本身的压缩、滑窗、分层缓存，在大模型里也已经是常规配置。",
+            "真正还没完全落地的，是论文里更极致的那一部分，比如向量量化，以及更接近信息论极限的编码方式。这些方法的问题不是原理，而是工程实现。它们对 GPU 不够友好，延迟控制更难，稳定性和泛化也更复杂，所以往往需要更长时间才能真正上线。",
+            "如果一定要粗略估计论文里已经落地和还没落地的部分占比，可以大致这么看：最早的 KV cache 是 1 倍成本，简单量化之后能做到 2 到 3 倍压缩，加上异常值处理可以到 3 到 4 倍，论文再往前推一点，大约到 4 到 4.5 倍。也就是说，大部分红利已经被拿走了，剩下的提升空间不大，而且代价越来越高。",
+            "这背后的原因也很清楚。前期压缩主要是在去掉冗余信息，后面面对的则是有效信息，再压就会直接影响模型能力。误差不再是平滑变化，而是到某个点之后快速恶化。实现难度也不是线性增长，而是明显抬升。",
+            "从模型表现其实可以反推，现在的主流模型已经在使用这些技术。长上下文能力增强、推理成本下降、性能依然稳定，这些现象本身就说明 KV cache 的效率已经被大幅优化。像 Google 这种级别的团队，大概率已经实现了低比特量化、异常值处理和一部分 KV cache 压缩。",
+            "也就是说，如果说 Google 这篇论文会对存储产生影响，那么其中大部分影响很可能已经体现出来了。还没有体现出来的那一部分，其实施难度也会比此前更高。",
+            "更重要的是，这篇论文的意义不在于多省了多少内存，而在于给出了一个边界。KV cache 压缩这条路已经接近极限，剩下的提升空间很有限。接下来真正能带来变化的，未必还会来自压缩本身，而是需要找到其他路径。",
+          ],
+        },
       ],
     },
     background: {
