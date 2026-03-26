@@ -29,6 +29,17 @@ export function RecentUpdates({ content }: { content: SiteContent["recent"] }) {
                     <div className="mb-2 text-sm font-mono text-primary">{item.date}</div>
                     <div className="mb-2 text-lg font-semibold text-foreground">{item.title}</div>
                     <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
+                    {item.url ? (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+                      >
+                        {item.linkLabel ?? "Open link"}
+                        <ArrowUpRight className="h-4 w-4" />
+                      </a>
+                    ) : null}
                   </div>
                 ))}
               </div>

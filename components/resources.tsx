@@ -65,10 +65,6 @@ export function Resources({ content }: { content: SiteContent["resources"] }) {
             </div>
           </CardContent>
         </Card>
-
-        <div className="mt-8 p-4 rounded-lg bg-secondary/30 border border-border">
-          <p className="text-sm text-muted-foreground text-center">{content.note}</p>
-        </div>
       </div>
     </section>
   )

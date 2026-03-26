@@ -39,7 +39,7 @@ export type SiteContent = {
     title: string
     description: string
     latestTitle: string
-    latest: Array<{ date: string; title: string; description: string }>
+    latest: Array<{ date: string; title: string; description: string; url?: string; linkLabel?: string }>
     impactTitle: string
     impacts: Array<{ label: string; value: string; description: string }>
   }
@@ -171,7 +171,6 @@ export type SiteContent = {
     items: Array<{ title: string; description: string; url: string; type: "blog" | "paper" }>
     communityTitle: string
     communities: Array<{ name: string; description: string; url: string }>
-    note: string
   }
   footer: {
     paper: string
@@ -304,36 +303,23 @@ export const siteContent: Record<Locale, SiteContent> = {
       latest: [
         {
           date: "March 2026",
+          title: "TurboQuant landed in MLX in 25 minutes with GPT-5.4",
+          description: "A builder reported using GPT-5.4 to complete an MLX implementation of TurboQuant in 25 minutes.",
+          url: "https://x.com/mweinbach/status/2036786698315546728",
+          linkLabel: "View post",
+        },
+        {
+          date: "March 2026",
           title: "Google Research formally introduced TurboQuant",
           description: "The release framed TurboQuant as a near-optimal online quantization method for both KV cache compression and vector search.",
-        },
-        {
-          date: "March 2026",
-          title: "Community integration threads started immediately",
-          description: "Open-source discussion moved quickly into how TurboQuant could land in inference stacks such as llama.cpp and related runtimes.",
-        },
-        {
-          date: "March 2026",
-          title: "Attention shifted from theory to deployment economics",
-          description: "The core discussion became whether 3-bit, zero-loss KV compression changes the memory and latency budget for long-context serving.",
-        },
+        }
       ],
       impactTitle: "Why it matters",
       impacts: [
         {
-          label: "Serving cost",
-          value: "6x+ lower KV memory",
-          description: "That materially changes how many concurrent long-context sessions fit on a single accelerator.",
-        },
-        {
-          label: "Latency path",
-          value: "Up to 8x faster attention",
-          description: "The result matters not only for storage efficiency, but for the attention hot path under long sequences.",
-        },
-        {
-          label: "Ecosystem signal",
-          value: "High implementation interest",
-          description: "The immediate follow-up discussion suggests strong pressure for adoption in practical inference tooling.",
+          label: "Market impact",
+          value: "$MU and $SNDK sold off at the open",
+          description: "After $GOOGL released TurboQuant, both $MU and $SNDK were hit sharply at market open.",
         },
       ],
     },
@@ -637,7 +623,6 @@ v_quant = turboquant_quant(v)
           url: "https://github.com/ggml-org/llama.cpp/discussions/20969",
         },
       ],
-      note: "Note: the GitHub project cg94301/turboquant is unrelated. It is a trading strategy project, not this algorithm.",
     },
     footer: {
       paper: "Paper",
@@ -699,6 +684,13 @@ v_quant = turboquant_quant(v)
       latest: [
         {
           date: "2026 年 3 月",
+          title: "有人用 GPT-5.4 在 25 分钟内完成了 TurboQuant 的 MLX 实现",
+          description: "有开发者表示，自己使用 GPT-5.4 在 25 分钟内完成了 TurboQuant 在 MLX 上的实现。",
+          url: "https://x.com/mweinbach/status/2036786698315546728",
+          linkLabel: "查看原帖",
+        },
+        {
+          date: "2026 年 3 月",
           title: "Google Research 正式发布 TurboQuant",
           description: "官方把它定义为接近信息论最优的在线量化方法，同时覆盖 KV Cache 压缩和向量检索场景。",
         },
@@ -716,19 +708,9 @@ v_quant = turboquant_quant(v)
       impactTitle: "带来的影响",
       impacts: [
         {
-          label: "服务成本",
-          value: "KV 内存下降 6x+",
-          description: "这会直接改变单卡能承载的长上下文并发规模。",
-        },
-        {
-          label: "时延链路",
-          value: "注意力最快提升 8x",
-          description: "影响的不只是存储成本，也包括长序列下最核心的 attention 热路径。",
-        },
-        {
-          label: "生态信号",
-          value: "实现意愿很强",
-          description: "发布后的快速跟进说明它很可能进入实际推理工具链，而不只是停留在论文层面。",
+          label: "市场影响",
+          value: "$MU 和 $SNDK 开盘承压",
+          description: "由于 $GOOGL 发布 TurboQuant，$MU 和 $SNDK 在开盘时受到了严重冲击。",
         },
       ],
     },
@@ -1011,7 +993,6 @@ v_quant = turboquant_quant(v)
           url: "https://github.com/ggml-org/llama.cpp/discussions/20969",
         },
       ],
-      note: "注意：GitHub 上的 cg94301/turboquant 与本文算法无关，那是交易策略项目。",
     },
     footer: {
       paper: "论文",
@@ -1084,6 +1065,45 @@ siteContent.ko = {
       { venue: "AISTATS 2026", title: "PolarQuant", description: "정규화 오버헤드를 없애는 극좌표 변환 핵심", url: "https://arxiv.org/pdf/2502.02617", linkLabel: "arXiv: 2502.02617" },
       { venue: "AAAI 2025", title: "QJL", description: "1비트 비편향 내적 추정기", url: "https://dl.acm.org/doi/10.1609/aaai.v39i24.34773", linkLabel: "ACM DL" },
       { venue: "ICLR 2026", title: "TurboQuant", description: "거의 최적 왜곡을 달성하는 2단계 설계", url: "https://arxiv.org/pdf/2504.19874", linkLabel: "arXiv: 2504.19874" },
+    ],
+  },
+  recent: {
+    ...siteContent.en.recent,
+    eyebrow: "최근 동향",
+    title: "TurboQuant를 둘러싼 최신 흐름",
+    description: "논문 공개 직후 논의는 빠르게 구현, 배포, 장문맥 추론 비용 구조로 확장됐습니다.",
+    latestTitle: "최신 업데이트",
+    latest: [
+      {
+        date: "2026년 3월",
+        title: "누군가 GPT-5.4로 25분 만에 TurboQuant의 MLX 구현을 완료했다",
+        description: "한 개발자가 GPT-5.4를 사용해 25분 만에 TurboQuant의 MLX 구현을 끝냈다고 공유했습니다.",
+        url: "https://x.com/mweinbach/status/2036786698315546728",
+        linkLabel: "원문 보기",
+      },
+      {
+        date: "2026년 3월",
+        title: "Google Research가 TurboQuant를 공식 발표했다",
+        description: "공개 발표에서는 TurboQuant를 KV 캐시 압축과 벡터 검색을 모두 포괄하는 정보이론 근접형 온라인 양자화 기법으로 제시했습니다.",
+      },
+      {
+        date: "2026년 3월",
+        title: "커뮤니티가 곧바로 통합 논의에 들어갔다",
+        description: "오픈소스 논의는 곧바로 llama.cpp 같은 추론 스택과 관련 런타임에 TurboQuant를 어떻게 넣을지로 이어졌습니다.",
+      },
+      {
+        date: "2026년 3월",
+        title: "관심이 이론에서 배포 경제성으로 이동했다",
+        description: "논의의 핵심은 3비트 무손실 KV 압축이 장문맥 서빙의 메모리와 지연 시간 예산을 바꿀 수 있는지로 옮겨갔습니다.",
+      },
+    ],
+    impactTitle: "영향",
+    impacts: [
+      {
+        label: "시장 영향",
+        value: "$MU와 $SNDK가 장 시작 직후 하락 압력을 받았다",
+        description: "$GOOGL의 TurboQuant 발표 이후 $MU와 $SNDK는 개장 시점에 크게 흔들렸습니다.",
+      },
     ],
   },
   background: {
@@ -1266,11 +1286,10 @@ siteContent.ko = {
     ],
     communityTitle: "커뮤니티 논의",
     communities: [
-      { name: "Reddit r/LocalLLaMA", description: "로컬 LLM 배포 관련 커뮤니티" },
-      { name: "X (Twitter) #TurboQuant", description: "실시간 반응과 논의" },
-      { name: "llama.cpp #20969", description: "주요 통합 토론 스레드" },
+      { name: "Reddit r/LocalLLaMA", description: "로컬 LLM 배포 관련 커뮤니티", url: "https://www.reddit.com/r/LocalLLaMA/comments/1s2su28/google_research_turboquant_redefining_ai/" },
+      { name: "X (Twitter) #TurboQuant", description: "실시간 반응과 논의", url: "https://x.com/Prince_Canuma/status/2036611007523512397" },
+      { name: "llama.cpp #20969", description: "주요 통합 토론 스레드", url: "https://github.com/ggml-org/llama.cpp/discussions/20969" },
     ],
-    note: "참고: GitHub의 cg94301/turboquant 프로젝트는 이 알고리즘이 아니라 트레이딩 전략 프로젝트입니다.",
   },
   footer: {
     paper: "논문",
@@ -1327,6 +1346,45 @@ siteContent.ja = {
       { venue: "AISTATS 2026", title: "PolarQuant", description: "正規化オーバーヘッドを消す極座標変換の中核", url: "https://arxiv.org/pdf/2502.02617", linkLabel: "arXiv: 2502.02617" },
       { venue: "AAAI 2025", title: "QJL", description: "1 ビットの不偏内積推定器", url: "https://dl.acm.org/doi/10.1609/aaai.v39i24.34773", linkLabel: "ACM DL" },
       { venue: "ICLR 2026", title: "TurboQuant", description: "ほぼ最適な歪みを実現する 2 段構成", url: "https://arxiv.org/pdf/2504.19874", linkLabel: "arXiv: 2504.19874" },
+    ],
+  },
+  recent: {
+    ...siteContent.en.recent,
+    eyebrow: "最新動向",
+    title: "TurboQuantを巡る最新の動き",
+    description: "論文公開後、議論はすぐに実装、導入、長文脈推論のコスト構造へ広がりました。",
+    latestTitle: "最新アップデート",
+    latest: [
+      {
+        date: "2026年3月",
+        title: "GPT-5.4で25分以内にTurboQuantのMLX実装が行われた",
+        description: "ある開発者が、GPT-5.4を使って25分でTurboQuantのMLX実装を完了したと報告しました。",
+        url: "https://x.com/mweinbach/status/2036786698315546728",
+        linkLabel: "投稿を見る",
+      },
+      {
+        date: "2026年3月",
+        title: "Google ResearchがTurboQuantを正式に発表した",
+        description: "公開内容では、TurboQuantをKVキャッシュ圧縮とベクトル検索の両方に使える、情報理論限界に近いオンライン量子化手法として位置づけました。",
+      },
+      {
+        date: "2026年3月",
+        title: "コミュニティはすぐに統合議論へ移った",
+        description: "オープンソース側の議論は、llama.cppなどの推論スタックや関連ランタイムにTurboQuantをどう組み込むかへすぐ進みました。",
+      },
+      {
+        date: "2026年3月",
+        title: "関心は理論から導入経済性へ移った",
+        description: "議論の中心は、3ビットの無損失KV圧縮が長文脈サービングのメモリ予算とレイテンシ予算を書き換えるかどうかになりました。",
+      },
+    ],
+    impactTitle: "影響",
+    impacts: [
+      {
+        label: "市場への影響",
+        value: "$MUと$SNDKが寄り付きで大きく売られた",
+        description: "$GOOGLによるTurboQuant公開を受けて、$MUと$SNDKは寄り付きで大きな圧力を受けました。",
+      },
     ],
   },
   background: {
@@ -1508,11 +1566,10 @@ siteContent.ja = {
     ],
     communityTitle: "コミュニティ議論",
     communities: [
-      { name: "Reddit r/LocalLLaMA", description: "ローカル LLM 配備に関するコミュニティ" },
-      { name: "X (Twitter) #TurboQuant", description: "継続中の反応と議論" },
-      { name: "llama.cpp #20969", description: "主要な統合ディスカッション" },
+      { name: "Reddit r/LocalLLaMA", description: "ローカル LLM 配備に関するコミュニティ", url: "https://www.reddit.com/r/LocalLLaMA/comments/1s2su28/google_research_turboquant_redefining_ai/" },
+      { name: "X (Twitter) #TurboQuant", description: "継続中の反応と議論", url: "https://x.com/Prince_Canuma/status/2036611007523512397" },
+      { name: "llama.cpp #20969", description: "主要な統合ディスカッション", url: "https://github.com/ggml-org/llama.cpp/discussions/20969" },
     ],
-    note: "注: GitHub の cg94301/turboquant は別プロジェクトで、取引戦略向けの実装です。本アルゴリズムとは無関係です。",
   },
   footer: {
     paper: "論文",
@@ -1563,6 +1620,45 @@ siteContent.fr = {
     description:
       "TurboQuant n'est pas un simple outil de compression. C'est un cadre de quantification en ligne proche de la limite informationnelle, tout en restant data-oblivious et adapté aux accélérateurs.",
     traditionalTitle: "Méthodes classiques (par ex. PQ)",
+  },
+  recent: {
+    ...siteContent.en.recent,
+    eyebrow: "Dernières actualités",
+    title: "Derniers développements autour de TurboQuant",
+    description: "Après la publication de l'article, la discussion a vite basculé vers l'implémentation, le déploiement et l'économie de l'inférence long contexte.",
+    latestTitle: "Dernières mises à jour",
+    latest: [
+      {
+        date: "mars 2026",
+        title: "Quelqu'un a réalisé une implémentation MLX de TurboQuant en 25 minutes avec GPT-5.4",
+        description: "Un développeur a indiqué avoir finalisé une implémentation MLX de TurboQuant en 25 minutes avec GPT-5.4.",
+        url: "https://x.com/mweinbach/status/2036786698315546728",
+        linkLabel: "Voir la publication",
+      },
+      {
+        date: "mars 2026",
+        title: "Google Research a officiellement présenté TurboQuant",
+        description: "La publication a présenté TurboQuant comme une méthode de quantification en ligne proche de l'optimum théorique pour la compression du cache KV et la recherche vectorielle.",
+      },
+      {
+        date: "mars 2026",
+        title: "Les discussions d'intégration communautaire ont démarré immédiatement",
+        description: "Les échanges open source se sont rapidement concentrés sur la façon d'intégrer TurboQuant dans des piles d'inférence comme llama.cpp et des runtimes associés.",
+      },
+      {
+        date: "mars 2026",
+        title: "L'attention s'est déplacée de la théorie vers l'économie du déploiement",
+        description: "Le point central est devenu la question de savoir si une compression KV 3 bits sans perte pouvait changer le budget mémoire et latence des services long contexte.",
+      },
+    ],
+    impactTitle: "Impact",
+    impacts: [
+      {
+        label: "Impact marché",
+        value: "$MU et $SNDK ont été fortement touchés à l'ouverture",
+        description: "Après la publication de TurboQuant par $GOOGL, $MU et $SNDK ont subi une forte pression dès l'ouverture.",
+      },
+    ],
   },
   background: {
     ...siteContent.en.background,
@@ -1658,7 +1754,6 @@ siteContent.fr = {
       { title: "Article QJL", description: "Transformation JL quantifiée, AAAI 2025", url: "https://dl.acm.org/doi/10.1609/aaai.v39i24.34773", type: "paper" },
     ],
     communityTitle: "Discussion communautaire",
-    note: "Note : le dépôt GitHub cg94301/turboquant est sans rapport avec cet algorithme. Il s'agit d'un projet de stratégie de trading.",
   },
   footer: {
     paper: "Article",
@@ -1709,6 +1804,45 @@ siteContent.de = {
     description:
       "TurboQuant ist nicht nur ein weiterer Kompressionstrick. Es ist ein Online-Quantisierungsframework nahe an der informationstheoretischen Grenze und gleichzeitig datenunabhängig und accelerator-freundlich.",
     traditionalTitle: "Klassische Methoden (z. B. PQ)",
+  },
+  recent: {
+    ...siteContent.en.recent,
+    eyebrow: "Neueste Entwicklungen",
+    title: "Aktuelle Dynamik rund um TurboQuant",
+    description: "Nach der Veröffentlichung verlagerte sich die Diskussion schnell auf Implementierung, Deployment und die Kostenstruktur von Long-Context-Inferenz.",
+    latestTitle: "Neueste Updates",
+    latest: [
+      {
+        date: "März 2026",
+        title: "Jemand setzte TurboQuant in 25 Minuten mit GPT-5.4 in MLX um",
+        description: "Ein Entwickler berichtete, mit GPT-5.4 in 25 Minuten eine MLX-Implementierung von TurboQuant fertiggestellt zu haben.",
+        url: "https://x.com/mweinbach/status/2036786698315546728",
+        linkLabel: "Beitrag ansehen",
+      },
+      {
+        date: "März 2026",
+        title: "Google Research stellte TurboQuant offiziell vor",
+        description: "Die Veröffentlichung positionierte TurboQuant als online arbeitendes Quantisierungsverfahren nahe am informationstheoretischen Limit für KV-Cache-Kompression und Vektorsuche.",
+      },
+      {
+        date: "März 2026",
+        title: "Community-Threads zur Integration starteten sofort",
+        description: "Die Open-Source-Diskussion drehte sich schnell darum, wie TurboQuant in Inferenz-Stacks wie llama.cpp und verwandte Runtimes gelangen kann.",
+      },
+      {
+        date: "März 2026",
+        title: "Der Fokus verlagerte sich von Theorie auf Deployment-Ökonomie",
+        description: "Im Zentrum stand nun die Frage, ob 3-Bit-KV-Kompression ohne Qualitätsverlust das Speicher- und Latenzbudget für lange Kontexte verändert.",
+      },
+    ],
+    impactTitle: "Auswirkung",
+    impacts: [
+      {
+        label: "Marktreaktion",
+        value: "$MU und $SNDK gerieten zur Eröffnung stark unter Druck",
+        description: "Nach der Veröffentlichung von TurboQuant durch $GOOGL wurden $MU und $SNDK zum Handelsstart deutlich getroffen.",
+      },
+    ],
   },
   background: {
     ...siteContent.en.background,
@@ -1801,7 +1935,6 @@ siteContent.de = {
       { title: "QJL Paper", description: "Quantisierte JL-Transformation, AAAI 2025", url: "https://dl.acm.org/doi/10.1609/aaai.v39i24.34773", type: "paper" },
     ],
     communityTitle: "Community-Diskussion",
-    note: "Hinweis: Das GitHub-Projekt cg94301/turboquant hat nichts mit diesem Algorithmus zu tun. Es ist ein Trading-Strategie-Projekt.",
   },
   footer: {
     paper: "Paper",
@@ -1852,6 +1985,45 @@ siteContent.pt = {
     description:
       "TurboQuant não é apenas mais um truque de compressão. É um framework de quantização online próximo do limite teórico, ao mesmo tempo data-oblivious e amigável para aceleradores.",
     traditionalTitle: "Métodos tradicionais (por exemplo, PQ)",
+  },
+  recent: {
+    ...siteContent.en.recent,
+    eyebrow: "Atualizações recentes",
+    title: "Últimos movimentos em torno do TurboQuant",
+    description: "Depois da publicação do artigo, a conversa rapidamente migrou para implementação, implantação e economia da inferência com contexto longo.",
+    latestTitle: "Últimas atualizações",
+    latest: [
+      {
+        date: "março de 2026",
+        title: "Alguém concluiu uma implementação de TurboQuant em MLX em 25 minutos com GPT-5.4",
+        description: "Um desenvolvedor relatou ter concluído uma implementação de TurboQuant em MLX em 25 minutos usando GPT-5.4.",
+        url: "https://x.com/mweinbach/status/2036786698315546728",
+        linkLabel: "Ver postagem",
+      },
+      {
+        date: "março de 2026",
+        title: "Google Research apresentou oficialmente o TurboQuant",
+        description: "O lançamento enquadrou o TurboQuant como um método de quantização online próximo do ótimo teórico tanto para compressão de cache KV quanto para busca vetorial.",
+      },
+      {
+        date: "março de 2026",
+        title: "As discussões de integração na comunidade começaram imediatamente",
+        description: "A conversa em código aberto avançou rápido para como levar o TurboQuant a stacks de inferência como llama.cpp e runtimes relacionados.",
+      },
+      {
+        date: "março de 2026",
+        title: "O foco mudou da teoria para a economia de implantação",
+        description: "A questão central passou a ser se a compressão KV de 3 bits sem perda pode mudar o orçamento de memória e latência para serving com contexto longo.",
+      },
+    ],
+    impactTitle: "Impacto",
+    impacts: [
+      {
+        label: "Impacto de mercado",
+        value: "$MU e $SNDK sofreram forte pressão na abertura",
+        description: "Após o lançamento do TurboQuant pela $GOOGL, $MU e $SNDK foram atingidas de forma acentuada na abertura do mercado.",
+      },
+    ],
   },
   background: {
     ...siteContent.en.background,
@@ -1944,7 +2116,6 @@ siteContent.pt = {
       { title: "Artigo QJL", description: "Transformação JL quantizada, AAAI 2025", url: "https://dl.acm.org/doi/10.1609/aaai.v39i24.34773", type: "paper" },
     ],
     communityTitle: "Discussão da comunidade",
-    note: "Observação: o projeto GitHub cg94301/turboquant não tem relação com este algoritmo. Trata-se de um projeto de estratégia de trading.",
   },
   footer: {
     paper: "Artigo",
