@@ -11,6 +11,9 @@ export const metadata: Metadata = {
     "TurboQuant is an online vector quantization algorithm for compressing KV cache with minimal accuracy loss and large memory savings.",
   metadataBase: new URL(getSiteUrl()),
   generator: "v0.app",
+  other: {
+    "google-adsense-account": "ca-pub-8738419268805262",
+  },
   icons: {
     icon: [
       {
@@ -46,6 +49,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased">
+        <Script
+          id="google-adsense"
+          async
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8738419268805262"
+        />
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {clarityScript}
         </Script>
