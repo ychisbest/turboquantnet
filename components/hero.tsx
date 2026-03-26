@@ -1,7 +1,9 @@
 "use client"
 
+import Image from "next/image"
 import { ArrowRight, Cpu, Database, Zap } from "lucide-react"
 
+import heroImage from "@/assets/hero.png"
 import { Button } from "@/components/ui/button"
 import { type SiteContent } from "@/lib/site-content"
 
@@ -44,6 +46,16 @@ export function Hero({ content }: { content: SiteContent["hero"] }) {
               {content.secondaryCta}
             </a>
           </Button>
+        </div>
+
+        <div className="relative mx-auto mb-16 max-w-5xl overflow-hidden rounded-3xl border border-border bg-card/40 p-3 shadow-2xl shadow-primary/10 backdrop-blur-sm">
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/8 via-transparent to-background/30" />
+          <Image
+            src={heroImage}
+            alt="TurboQuantNet hero visualization"
+            priority
+            className="relative z-10 h-auto w-full rounded-2xl object-cover"
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
