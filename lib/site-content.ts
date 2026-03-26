@@ -133,6 +133,28 @@ export type SiteContent = {
     compareTitle: string
     compareHeaders: string[]
     compareRows: Array<{ highlight?: boolean; cells: string[] }>
+    memoryProjection: {
+      title: string
+      description: string
+      note: string
+      labels: {
+        beforeMemory: string
+        afterMemory: string
+        beforeCards: string
+        afterCards: string
+      }
+      headers: string[]
+      rows: Array<{
+        model: string
+        weight: string
+        pureModel: number
+        totalBefore: number
+        totalAfter: number
+        cardsBefore: number
+        cardsAfter: number
+        change: string
+      }>
+    }
   }
   usage: {
     eyebrow: string
@@ -216,6 +238,72 @@ const sharedResources = [
     type: "paper" as const,
   },
 ]
+
+const sharedMemoryProjectionRowsEn = [
+  { model: "ChatGLM-4 (9B)", weight: "BF16", pureModel: 18, totalBefore: 19.8, totalAfter: 18.3, cardsBefore: 1, cardsAfter: 1, change: "Extra headroom on a single 4090." },
+  { model: "ChatGLM-4 (9B)", weight: "INT8", pureModel: 9, totalBefore: 10.8, totalAfter: 9.3, cardsBefore: 1, cardsAfter: 1, change: "Still single-card, with more buffer." },
+  { model: "ChatGLM-4 (9B)", weight: "INT4", pureModel: 5, totalBefore: 6.8, totalAfter: 5.3, cardsBefore: 1, cardsAfter: 1, change: "Very comfortable single-card fit." },
+  { model: "Qwen-2.5 (32B)", weight: "BF16", pureModel: 64, totalBefore: 69.0, totalAfter: 64.8, cardsBefore: 3, cardsAfter: 3, change: "Savings help, but not enough to drop a GPU." },
+  { model: "Qwen-2.5 (32B)", weight: "INT8", pureModel: 32, totalBefore: 37.0, totalAfter: 32.8, cardsBefore: 2, cardsAfter: 2, change: "More margin on a 2x4090 node." },
+  { model: "Qwen-2.5 (32B)", weight: "INT4", pureModel: 18, totalBefore: 23.0, totalAfter: 18.8, cardsBefore: 2, cardsAfter: 1, change: "Pulled back under the single-4090 limit." },
+  { model: "Llama-3.1 (70B)", weight: "BF16", pureModel: 140, totalBefore: 150.0, totalAfter: 141.7, cardsBefore: 7, cardsAfter: 6, change: "Drops one RTX 4090 at 100K context." },
+  { model: "Llama-3.1 (70B)", weight: "INT8", pureModel: 70, totalBefore: 80.0, totalAfter: 71.7, cardsBefore: 4, cardsAfter: 3, change: "Material hardware cost reduction." },
+  { model: "Llama-3.1 (70B)", weight: "INT4", pureModel: 38, totalBefore: 48.0, totalAfter: 39.7, cardsBefore: 3, cardsAfter: 2, change: "Brings 70B into a practical dual-4090 envelope." },
+  { model: "Mixtral 8x22B (141B MoE)", weight: "BF16", pureModel: 282, totalBefore: 288.0, totalAfter: 283.0, cardsBefore: 13, cardsAfter: 13, change: "MoE keeps KV share relatively small." },
+  { model: "Mixtral 8x22B (141B MoE)", weight: "INT8", pureModel: 141, totalBefore: 147.0, totalAfter: 142.0, cardsBefore: 7, cardsAfter: 7, change: "Lower pressure, but same card class." },
+  { model: "Mixtral 8x22B (141B MoE)", weight: "INT4", pureModel: 75, totalBefore: 81.0, totalAfter: 76.0, cardsBefore: 4, cardsAfter: 4, change: "Useful slack without a node count change." },
+  { model: "DeepSeek-R1 (671B MoE)", weight: "FP8", pureModel: 700, totalBefore: 712.0, totalAfter: 702.0, cardsBefore: 31, cardsAfter: 30, change: "Saves one 4090 even at hyperscale." },
+  { model: "DeepSeek-R1 (671B MoE)", weight: "INT4", pureModel: 350, totalBefore: 362.0, totalAfter: 352.0, cardsBefore: 16, cardsAfter: 15, change: "Still too large for small nodes, but one card disappears." },
+]
+
+const sharedMemoryProjectionRowsZh = [
+  { model: "ChatGLM-4 (9B)", weight: "原版 (BF16)", pureModel: 18, totalBefore: 19.8, totalAfter: 18.3, cardsBefore: 1, cardsAfter: 1, change: "留出更多单卡余量。" },
+  { model: "ChatGLM-4 (9B)", weight: "INT8", pureModel: 9, totalBefore: 10.8, totalAfter: 9.3, cardsBefore: 1, cardsAfter: 1, change: "仍是单卡，但缓冲更大。" },
+  { model: "ChatGLM-4 (9B)", weight: "INT4", pureModel: 5, totalBefore: 6.8, totalAfter: 5.3, cardsBefore: 1, cardsAfter: 1, change: "单卡运行非常宽松。" },
+  { model: "Qwen-2.5 (32B)", weight: "原版 (BF16)", pureModel: 64, totalBefore: 69.0, totalAfter: 64.8, cardsBefore: 3, cardsAfter: 3, change: "有节省，但不足以下降一张卡。" },
+  { model: "Qwen-2.5 (32B)", weight: "INT8", pureModel: 32, totalBefore: 37.0, totalAfter: 32.8, cardsBefore: 2, cardsAfter: 2, change: "双卡 4090 余量更充足。" },
+  { model: "Qwen-2.5 (32B)", weight: "INT4", pureModel: 18, totalBefore: 23.0, totalAfter: 18.8, cardsBefore: 2, cardsAfter: 1, change: "从双卡边缘拉回单卡安全线。" },
+  { model: "Llama-3.1 (70B)", weight: "原版 (BF16)", pureModel: 140, totalBefore: 150.0, totalAfter: 141.7, cardsBefore: 7, cardsAfter: 6, change: "100K 上下文下直接省出 1 张 4090。" },
+  { model: "Llama-3.1 (70B)", weight: "INT8", pureModel: 70, totalBefore: 80.0, totalAfter: 71.7, cardsBefore: 4, cardsAfter: 3, change: "硬件成本出现实质下降。" },
+  { model: "Llama-3.1 (70B)", weight: "INT4", pureModel: 38, totalBefore: 48.0, totalAfter: 39.7, cardsBefore: 3, cardsAfter: 2, change: "把 70B 拉回双卡 4090 可运行区间。" },
+  { model: "Mixtral 8x22B (141B MoE)", weight: "原版 (BF16)", pureModel: 282, totalBefore: 288.0, totalAfter: 283.0, cardsBefore: 13, cardsAfter: 13, change: "MoE 架构下 KV 占比相对较小。" },
+  { model: "Mixtral 8x22B (141B MoE)", weight: "INT8", pureModel: 141, totalBefore: 147.0, totalAfter: 142.0, cardsBefore: 7, cardsAfter: 7, change: "显存压力下降，但卡数不变。" },
+  { model: "Mixtral 8x22B (141B MoE)", weight: "INT4", pureModel: 75, totalBefore: 81.0, totalAfter: 76.0, cardsBefore: 4, cardsAfter: 4, change: "能缓解压力，但仍在同一卡数组。" },
+  { model: "DeepSeek-R1 (671B MoE)", weight: "原版 (FP8)", pureModel: 700, totalBefore: 712.0, totalAfter: 702.0, cardsBefore: 31, cardsAfter: 30, change: "超大集群里也能省出 1 张 4090。" },
+  { model: "DeepSeek-R1 (671B MoE)", weight: "INT4", pureModel: 350, totalBefore: 362.0, totalAfter: 352.0, cardsBefore: 16, cardsAfter: 15, change: "仍属大集群场景，但少一张卡。" },
+]
+
+const sharedMemoryProjectionEn = {
+  memoryProjection: {
+    title: "100K context memory projections",
+    description: "Predicted total VRAM before and after TurboQuant, plus the RTX 4090 count needed to hold each setup.",
+    note: "Assumes RTX 4090 nominal VRAM of 24GB, with practical allocation rounded up after framework overhead.",
+    labels: {
+      beforeMemory: "Before TurboQuant",
+      afterMemory: "After TurboQuant",
+      beforeCards: "4090s before",
+      afterCards: "4090s after",
+    },
+    headers: ["Model", "Weights", "Pure model VRAM", "Total VRAM before", "Total VRAM after", "4090s before", "4090s after", "Change"],
+    rows: sharedMemoryProjectionRowsEn,
+  },
+}
+
+const sharedMemoryProjectionZh = {
+  memoryProjection: {
+    title: "100K 上下文显存预测",
+    description: "把 TurboQuant 启用前后的总显存，以及对应需要的 RTX 4090 张数，放到同一视图里对比。",
+    note: "按 RTX 4090 标称 24GB 显存估算，并预留基础框架开销后向上取整。",
+    labels: {
+      beforeMemory: "优化前总显存",
+      afterMemory: "优化后总显存",
+      beforeCards: "优化前 4090 张数",
+      afterCards: "优化后 4090 张数",
+    },
+    headers: ["模型系列", "权重版本", "纯模型显存", "优化前总显存", "优化后总显存", "优化前 4090 需求", "优化后 4090 需求", "核心变化说明"],
+    rows: sharedMemoryProjectionRowsZh,
+  },
+}
 
 export const siteContent: Record<Locale, SiteContent> = {
   en: {
@@ -500,6 +588,7 @@ Input: dimension d, bit width b
         { cells: ["SnapKV", "Finetuning", "No", "2-4x", "2-4x"] },
         { cells: ["DuQuant", "Calibration", "Partial", "4x", "4x"] },
       ],
+      ...sharedMemoryProjectionEn,
     },
     usage: {
       eyebrow: "Usage",
@@ -869,6 +958,7 @@ Input: 维度 d, 比特宽度 b
         { cells: ["SnapKV", "需微调", "否", "2-4x", "2-4x"] },
         { cells: ["DuQuant", "需校准", "部分", "4x", "4x"] },
       ],
+      ...sharedMemoryProjectionZh,
     },
     usage: {
       eyebrow: "使用指南",

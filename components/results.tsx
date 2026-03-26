@@ -1,3 +1,4 @@
+import { MemoryProjectionChart } from "@/components/memory-projection-chart"
 import { Card, CardContent } from "@/components/ui/card"
 import { type SiteContent } from "@/lib/site-content"
 
@@ -151,6 +152,10 @@ export function Results({ content }: { content: SiteContent["results"] }) {
               </div>
             </CardContent>
           </Card>
+        </div>
+
+        <div className="mt-16">
+          <MemoryProjectionChart content={content.memoryProjection} />
         </div>
       </div>
     </section>
