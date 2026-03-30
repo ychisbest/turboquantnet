@@ -19,7 +19,13 @@ export async function generateMetadata({
     return getSiteContent("en").meta
   }
 
-  return getSiteContent(locale).meta
+  return {
+    ...getSiteContent(locale).meta,
+    robots: {
+      index: false,
+      follow: true,
+    },
+  }
 }
 
 export default async function LocalePage({

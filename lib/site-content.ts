@@ -308,9 +308,9 @@ const sharedMemoryProjectionZh = {
 export const siteContent: Record<Locale, SiteContent> = {
   en: {
     meta: {
-      title: "TurboQuant - Extreme Compression for AI Efficiency",
+      title: "TurboQuant.net - Independent TurboQuant Analysis",
       description:
-        "TurboQuant is a new online vector quantization algorithm that compresses KV cache to 3 bits with zero accuracy loss, cutting memory by 6x and speeding attention up by 8x.",
+        "Original explainers, benchmark interpretation, and implementation notes covering TurboQuant, KV-cache compression, and long-context inference.",
     },
     languageNames,
     nav: {
@@ -326,13 +326,13 @@ export const siteContent: Record<Locale, SiteContent> = {
       languageLabel: "Language",
     },
     hero: {
-      badge: "Google Research · Released March 2026",
+      badge: "Independent analysis · Built from public research context",
       title: "TurboQuant",
-      highlight: "Redefining AI Efficiency",
+      highlight: "For Builders Evaluating Compression",
       subtitle:
-        "A new online vector quantization algorithm that delivers zero-accuracy-loss 3-bit KV cache compression, 6x lower memory use, and up to 8x faster attention.",
+        "Original explainers, benchmark breakdowns, and implementation notes covering TurboQuant, PolarQuant, QJL, and the real systems tradeoffs behind long-context KV-cache compression.",
       primaryCta: "Explore the Core Idea",
-      secondaryCta: "Read the Paper",
+      secondaryCta: "Read Source Paper",
       metrics: [
         { value: "6x+", label: "memory compression" },
         { value: "8x", label: "attention speedup (H100)" },
@@ -343,7 +343,7 @@ export const siteContent: Record<Locale, SiteContent> = {
       eyebrow: "Core Innovation",
       title: "Why TurboQuant feels like a category-changing result",
       description:
-        "TurboQuant is not just another compression trick. It is an online quantization framework that gets close to the information-theoretic limit while staying data-oblivious and accelerator-friendly.",
+        "TurboQuant.net focuses on the engineering meaning of the result: what is original in the method, what the benchmarks actually imply, and where real deployment gains are likely to come from.",
       traditionalTitle: "Traditional Methods (for example PQ)",
       turboTitle: "TurboQuant",
       traditionalItems: [
@@ -717,7 +717,7 @@ v_quant = turboquant_quant(v)
       paper: "Paper",
       blog: "Blog",
       faq: "FAQ",
-      copyright: "Content based on public Google Research papers and posts",
+      copyright: "Original editorial analysis with source-linked references",
     },
   },
   zh: {

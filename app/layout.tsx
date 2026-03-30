@@ -6,11 +6,10 @@ import "./globals.css"
 import { getSiteUrl } from "@/lib/site-url"
 
 export const metadata: Metadata = {
-  title: "TurboQuant - Extreme Compression for AI Efficiency",
+  title: "TurboQuant.net - Independent Analysis Of TurboQuant And KV-Cache Compression",
   description:
-    "TurboQuant is an online vector quantization algorithm for compressing KV cache with minimal accuracy loss and large memory savings.",
+    "Independent analysis, explainers, and implementation notes covering TurboQuant, PolarQuant, QJL, and long-context KV-cache compression.",
   metadataBase: new URL(getSiteUrl()),
-  generator: "v0.app",
   other: {
     "google-adsense-account": "ca-pub-8738419268805262",
   },

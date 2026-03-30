@@ -15,6 +15,15 @@ type NavigationProps = {
 
 const languageOrder: Locale[] = ["en", "zh", "ko", "ja", "fr", "de", "pt"]
 
+function resolveHref(locale: Locale, href: string) {
+  if (!href.startsWith("#")) {
+    return href
+  }
+
+  const basePath = getLocalePath(locale)
+  return href === "#" ? basePath : `${basePath}${href}`
+}
+
 export function Navigation({ locale, content, languageNames }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -35,22 +44,22 @@ export function Navigation({ locale, content, languageNames }: NavigationProps) 
     >
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between gap-6">
-          <a href="#" className="flex items-center gap-2 shrink-0">
+          <Link href={getLocalePath(locale)} className="flex items-center gap-2 shrink-0">
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-sm">TQ</span>
             </div>
             <span className="font-bold text-lg text-foreground">TurboQuant</span>
-          </a>
+          </Link>
 
           <div className="hidden md:flex items-center gap-8">
             {content.items.map((item) => (
-              <a
+              <Link
                 key={item.href}
-                href={item.href}
+                href={resolveHref(locale, item.href)}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -97,14 +106,14 @@ export function Navigation({ locale, content, languageNames }: NavigationProps) 
           <div className="md:hidden mt-4 pb-4 border-t border-border pt-4 space-y-4">
             <div className="flex flex-col gap-4">
               {content.items.map((item) => (
-                <a
+                <Link
                   key={item.href}
-                  href={item.href}
+                  href={resolveHref(locale, item.href)}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
             </div>
 
