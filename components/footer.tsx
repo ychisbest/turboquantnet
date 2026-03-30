@@ -37,7 +37,9 @@ export function Footer({ content }: { content: SiteContent["footer"] }) {
               </a>
             </div>
 
-            <div className="text-sm text-muted-foreground">{content.copyright}</div>
+            {content.copyright ? (
+              <div className="text-sm text-muted-foreground">{content.copyright}</div>
+            ) : null}
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground">

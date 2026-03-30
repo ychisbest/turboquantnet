@@ -717,7 +717,7 @@ v_quant = turboquant_quant(v)
       paper: "Paper",
       blog: "Blog",
       faq: "FAQ",
-      copyright: "Original editorial analysis with source-linked references",
+      copyright: "",
     },
   },
   zh: {
