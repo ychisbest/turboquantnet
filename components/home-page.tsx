@@ -5,7 +5,6 @@ import { FAQ } from "@/components/faq"
 import { Footer } from "@/components/footer"
 import { Future } from "@/components/future"
 import { Hero } from "@/components/hero"
-import { HomepageAd } from "@/components/homepage-ad"
 import { Navigation } from "@/components/navigation"
 import { Overview } from "@/components/overview"
 import { RecentUpdates } from "@/components/recent-updates"
@@ -21,7 +20,6 @@ export function HomePage({ locale }: { locale: Locale }) {
     <main className="min-h-screen bg-background">
       <Navigation locale={locale} content={content.nav} languageNames={content.languageNames} />
       <Hero content={content.hero} />
-      <HomepageAd />
       <RecentUpdates content={content.recent} />
       <ExpertCommentary content={content.expert} />
       <Overview content={content.overview} />
