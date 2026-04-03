@@ -1,3 +1,4 @@
+import { AdBanner } from "@/components/ad-banner"
 import { Background } from "@/components/background"
 import { CorePrinciple } from "@/components/core-principle"
 import { ExpertCommentary } from "@/components/expert-commentary"
@@ -21,6 +22,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <Navigation locale={locale} content={content.nav} languageNames={content.languageNames} />
       <Hero content={content.hero} />
       <RecentUpdates content={content.recent} />
+      <AdBanner />
       <ExpertCommentary content={content.expert} />
       <Overview content={content.overview} />
       <Background content={content.background} />
