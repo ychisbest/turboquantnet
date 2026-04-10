@@ -49,6 +49,9 @@ export function Footer({ content }: { content: SiteContent["footer"] }) {
             <Link href="/contact" className="hover:text-foreground transition-colors">
               Contact
             </Link>
+            <Link href="/links" className="hover:text-foreground transition-colors">
+              Links
+            </Link>
             <Link href="/privacy" className="hover:text-foreground transition-colors">
               Privacy
             </Link>
