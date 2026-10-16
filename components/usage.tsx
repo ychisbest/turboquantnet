@@ -44,6 +44,11 @@ export function Usage({ content }: { content: SiteContent["usage"] }) {
                 </li>
               ))}
             </ul>
+            <p className="mt-6 text-sm">
+              <a href="/guide" className="text-primary hover:underline font-medium">
+                Full local-run guide → /guide
+              </a>
+            </p>
           </CardContent>
         </Card>
 

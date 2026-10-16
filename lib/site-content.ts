@@ -308,35 +308,34 @@ const sharedMemoryProjectionZh = {
 export const siteContent: Record<Locale, SiteContent> = {
   en: {
     meta: {
-      title: "TurboQuant.net - Independent TurboQuant Analysis",
+      title: "What Is TurboQuant? Independent Guide to Google's Algorithm",
       description:
-        "Original explainers, benchmark interpretation, and implementation notes covering TurboQuant, KV-cache compression, and long-context inference.",
+        "Independent explainers on TurboQuant (Google Research): what it is, KV-cache compression, PolarQuant/QJL, and links to paper + local-run status. Unofficial.",
     },
     languageNames,
     nav: {
       items: [
         { label: "Overview", href: "#overview" },
-        { label: "Background", href: "#background" },
-        { label: "Core", href: "#core" },
+        { label: "Paper", href: "/paper" },
+        { label: "Guide", href: "/guide" },
         { label: "Results", href: "#results" },
-        { label: "Usage", href: "#usage" },
         { label: "FAQ", href: "#faq" },
       ],
-      paperLabel: "Paper PDF",
+      paperLabel: "arXiv PDF",
       languageLabel: "Language",
     },
     hero: {
-      badge: "Independent analysis · Built from public research context",
+      badge: "Unofficial · Independent analysis of Google Research TurboQuant",
       title: "TurboQuant",
-      highlight: "For Builders Evaluating Compression",
+      highlight: "What It Is, How It Works, How to Run It",
       subtitle:
-        "Original explainers, benchmark breakdowns, and implementation notes covering TurboQuant, PolarQuant, QJL, and the real systems tradeoffs behind long-context KV-cache compression.",
-      primaryCta: "Explore the Core Idea",
-      secondaryCta: "Read Source Paper",
+        "Independent explainers for Google Research's TurboQuant algorithm—KV-cache compression, PolarQuant, QJL, cited paper results, and a practical status guide for MLX, LM Studio, llama.cpp forks, and vLLM. Not affiliated with Google.",
+      primaryCta: "Read the paper explainer",
+      secondaryCta: "Local run status",
       metrics: [
-        { value: "6x+", label: "memory compression" },
-        { value: "8x", label: "attention speedup (H100)" },
-        { value: "3-bit", label: "zero-loss compression" },
+        { value: "6×+", label: "KV memory cut (Google Research blog)" },
+        { value: "8×", label: "attn logits @4-bit on H100 (blog)" },
+        { value: "3.5-bit", label: "quality-neutral KV (paper abstract)" },
       ],
     },
     overview: {
@@ -595,11 +594,12 @@ Input: dimension d, bit width b
       title: "From paper to production",
       description: "How to think about integrating TurboQuant into a real stack",
       statusTitle: "Current status",
-      statusDescription: "The paper provides theory and pseudocode, but there is no official open-source implementation yet. Community integration work has started.",
+      statusDescription:
+        "Google Research published the paper and blog; engine support is community/upstream work. See /guide for the live status matrix.",
       statusItems: [
-        "llama.cpp Discussion #20969 is tracking integration ideas",
-        "Experiments in MLX report around 5x compression with 99.5% quality retention",
-        "Open-source code is widely expected around Q2 2026",
+        "vLLM: TurboQuant KV-cache support merged (PR #38479) and noted in v0.20.0 release notes — verify flags for your version",
+        "MLX: community package github.com/manjunathshiva/turboquant-mlx (follow its README)",
+        "llama.cpp / LM Studio: prefer community forks + open feature requests; do not assume stock binaries",
       ],
       stepsTitle: "Implementation sketch",
       steps: [
@@ -680,14 +680,46 @@ v_quant = turboquant_quant(v)
       title: "Common questions",
       description: "The main questions engineers and readers ask first",
       items: [
-        { question: "Does TurboQuant require training?", answer: "No. It is data-oblivious and online, so it does not need finetuning or calibration." },
-        { question: "How does it compare with KIVI or standard 4-bit quantization?", answer: "KIVI relies on per-channel calibration, while TurboQuant reports better quality at 3.5 bits and faster attention in the published benchmarks." },
-        { question: "Which models does it support?", answer: "In principle any transformer architecture. Reported evaluations include Gemma, Mistral, and Llama-3.1-8B." },
-        { question: "Where is the code?", answer: "There is no official release yet. For now the main references are the paper and community discussions such as llama.cpp #20969." },
-        { question: "Why does it matter for vector search?", answer: "It improves recall while keeping indexing overhead near zero, which is attractive for large-scale ANN and RAG systems." },
-        { question: "Is the zero-loss claim real?", answer: "At 3.5 bits, the paper reports quality neutrality on long-context benchmarks. At 2.5 bits there is a small drop on harder edge cases." },
-        { question: "What hardware is required?", answer: "It is GPU-friendly and especially strong on H100, but software-only CPU and mobile implementations are also plausible." },
-        { question: "What is the relation to PolarQuant?", answer: "PolarQuant is the first-stage compressor, and QJL is the second-stage residual correction layer." },
+        {
+          question: "What is TurboQuant?",
+          answer:
+            "TurboQuant is a Google Research online vector-quantization algorithm for compressing high-dimensional vectors—especially LLM KV caches and vector search—with near-optimal distortion rates. Primary sources: arXiv:2504.19874 (ICLR 2026) and the Google Research blog (24 Mar 2026). This website is an unofficial independent explainer.",
+        },
+        {
+          question: "Is TurboQuant.net an official Google site?",
+          answer:
+            "No. TurboQuant.net is independent and not affiliated with Google or Google Research. For authoritative material use the arXiv paper and the Google Research blog.",
+        },
+        {
+          question: "Does TurboQuant require training?",
+          answer:
+            "The Google Research blog states KV-cache quantization can be done without training or fine-tuning. Always confirm against the paper and your runtime’s implementation notes.",
+        },
+        {
+          question: "What results does the paper/blog report?",
+          answer:
+            "Blog: at least 6× KV-memory reduction in reported long-context tests; up to 8× attention-logit speedup for 4-bit vs 32-bit keys on H100. Paper abstract: quality neutrality at 3.5 bits/channel and marginal degradation at 2.5 bits/channel. See /paper for citations.",
+        },
+        {
+          question: "How do I run TurboQuant locally (MLX, LM Studio, llama.cpp)?",
+          answer:
+            "See the /guide status page. Short version: vLLM has upstream support in recent releases; MLX and llama.cpp mainly via community packages/forks; LM Studio support was still request-tracked when we last checked.",
+        },
+        {
+          question: "Where is the TurboQuant paper / arXiv / ICLR 2026 material?",
+          answer:
+            "Paper: https://arxiv.org/pdf/2504.19874 — explainer on this site: /paper. Venue listing: ICLR 2026.",
+        },
+        {
+          question: "I see spellings like turboquat or turbiquant — is that the same thing?",
+          answer:
+            "Those are common misspellings of TurboQuant. Same algorithm; use the correct spelling when searching docs and GitHub.",
+        },
+        {
+          question: "How does it compare with KIVI or standard 4-bit KV quantization?",
+          answer:
+            "The paper and blog compare against methods such as KIVI on long-context suites. Treat published tables as author-reported results; your fork/hardware may differ. Details on /paper.",
+        },
       ],
     },
     resources: {

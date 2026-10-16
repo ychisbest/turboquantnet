@@ -3,6 +3,7 @@ import { Background } from "@/components/background"
 import { CorePrinciple } from "@/components/core-principle"
 import { ExpertCommentary } from "@/components/expert-commentary"
 import { FAQ } from "@/components/faq"
+import { FaqJsonLd } from "@/components/faq-json-ld"
 import { Footer } from "@/components/footer"
 import { Future } from "@/components/future"
 import { Hero } from "@/components/hero"
@@ -19,8 +20,40 @@ export function HomePage({ locale }: { locale: Locale }) {
 
   return (
     <main className="min-h-screen bg-background">
+      {locale === "en" ? <FaqJsonLd items={content.faq.items} /> : null}
       <Navigation locale={locale} content={content.nav} languageNames={content.languageNames} />
       <Hero content={content.hero} />
+      <section className="px-6 pb-8">
+        <div className="mx-auto grid max-w-5xl gap-4 md:grid-cols-3">
+          <a
+            href="/paper"
+            className="rounded-xl border border-border bg-card/50 p-5 hover:border-primary/50"
+          >
+            <div className="font-semibold text-foreground">Paper & how it works</div>
+            <p className="mt-2 text-sm text-muted-foreground">
+              KV cache, PolarQuant, QJL, cited figures.
+            </p>
+          </a>
+          <a
+            href="/guide"
+            className="rounded-xl border border-border bg-card/50 p-5 hover:border-primary/50"
+          >
+            <div className="font-semibold text-foreground">How to use TurboQuant</div>
+            <p className="mt-2 text-sm text-muted-foreground">
+              MLX, LM Studio, llama.cpp, vLLM status.
+            </p>
+          </a>
+          <a
+            href="/#faq"
+            className="rounded-xl border border-border bg-card/50 p-5 hover:border-primary/50"
+          >
+            <div className="font-semibold text-foreground">FAQ</div>
+            <p className="mt-2 text-sm text-muted-foreground">
+              What it is, Google relation, typos, running locally.
+            </p>
+          </a>
+        </div>
+      </section>
       <RecentUpdates content={content.recent} />
       <AdBanner />
       <ExpertCommentary content={content.expert} />

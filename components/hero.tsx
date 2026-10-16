@@ -36,13 +36,13 @@ export function Hero({ content }: { content: SiteContent["hero"] }) {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
           <Button size="lg" className="gap-2 px-8" asChild>
-            <a href="#core">
+            <a href="/paper">
               {content.primaryCta}
               <ArrowRight className="w-4 h-4" />
             </a>
           </Button>
           <Button size="lg" variant="outline" className="gap-2 px-8" asChild>
-            <a href="https://arxiv.org/pdf/2504.19874" target="_blank" rel="noopener noreferrer">
+            <a href="/guide">
               {content.secondaryCta}
             </a>
           </Button>

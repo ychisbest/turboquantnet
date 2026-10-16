@@ -43,6 +43,12 @@ export function Footer({ content }: { content: SiteContent["footer"] }) {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
+            <Link href="/paper" className="hover:text-foreground transition-colors">
+              Paper
+            </Link>
+            <Link href="/guide" className="hover:text-foreground transition-colors">
+              Guide
+            </Link>
             <Link href="/about" className="hover:text-foreground transition-colors">
               About
             </Link>
@@ -59,6 +65,10 @@ export function Footer({ content }: { content: SiteContent["footer"] }) {
               Terms
             </Link>
           </div>
+
+          <p className="text-center text-xs text-muted-foreground max-w-3xl mx-auto">
+            Unofficial independent site. Not affiliated with Google or Google Research.
+          </p>
         </div>
       </div>
     </footer>
