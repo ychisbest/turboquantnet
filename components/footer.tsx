@@ -1,9 +1,12 @@
 import Link from "next/link"
 
 import { type SiteContent } from "@/lib/site-content"
+import { CfComments } from "@/components/cf-comments"
 
 export function Footer({ content }: { content: SiteContent["footer"] }) {
   return (
+    <>
+    <CfComments />
     <footer className="py-12 px-6 border-t border-border">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col gap-8">
@@ -72,5 +75,6 @@ export function Footer({ content }: { content: SiteContent["footer"] }) {
         </div>
       </div>
     </footer>
+    </>
   )
 }
