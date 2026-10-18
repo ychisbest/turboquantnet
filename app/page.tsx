@@ -7,11 +7,11 @@ const contentMeta = getSiteContent(DEFAULT_LOCALE).meta
 
 export const metadata: Metadata = {
   ...contentMeta,
-  alternates: { canonical: "https://turboquant.net" },
+  alternates: { canonical: "https://turboquant.net/" },
   openGraph: {
     title: contentMeta.title,
     description: contentMeta.description,
-    url: "https://turboquant.net",
+    url: "https://turboquant.net/",
   },
 }
 

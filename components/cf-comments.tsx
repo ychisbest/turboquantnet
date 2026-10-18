@@ -12,7 +12,7 @@ export function CfComments() {
     s.src = WIDGET
     s.defer = true
     s.dataset.site = SITE_ID
-    s.dataset.lang = "auto"
+    s.dataset.lang = "en"
     document.body.appendChild(s)
   }, [])
 

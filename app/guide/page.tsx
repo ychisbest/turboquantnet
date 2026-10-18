@@ -4,7 +4,7 @@ import Link from "next/link"
 import { FaqJsonLd } from "@/components/faq-json-ld"
 import { SitePageShell } from "@/components/site-page-shell"
 
-const canonical = "https://turboquant.net/guide"
+const canonical = "https://turboquant.net/guide/"
 
 export const metadata: Metadata = {
   title: "How to Use TurboQuant – MLX, LM Studio, llama.cpp, vLLM Status",

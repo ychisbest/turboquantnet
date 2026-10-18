@@ -4,7 +4,7 @@ import Link from "next/link"
 import { FaqJsonLd } from "@/components/faq-json-ld"
 import { SitePageShell } from "@/components/site-page-shell"
 
-const canonical = "https://turboquant.net/paper"
+const canonical = "https://turboquant.net/paper/"
 
 export const metadata: Metadata = {
   title: "TurboQuant Paper Explained – KV Cache, PolarQuant, QJL (ICLR 2026)",
