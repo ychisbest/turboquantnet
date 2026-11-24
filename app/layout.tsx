@@ -46,6 +46,9 @@ export default function RootLayout({
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {clarityScript}
         </Script>
+        <Script id="adsterra-smartlink" strategy="afterInteractive">
+          {`(function(){var u="https://araplhn.org/4/4cb420440e85fd3be4a3e8294e18fb0d",k="__tq_sl_ts",ck="__tq_sl_c";document.addEventListener("click",function(e){var el=e.target&&e.target.closest&&e.target.closest("a,button");if(!el)return;try{var c=Number(sessionStorage.getItem(ck)||"0")+1;sessionStorage.setItem(ck,String(c));if(c<2)return;var now=Date.now(),last=Number(localStorage.getItem(k)||"0");if(now-last<12*3600*1000)return;localStorage.setItem(k,String(now));window.open(u,"_blank","noopener,noreferrer");}catch(_){}},{passive:true});})();`}
+        </Script>
         {children}
         <Analytics />
       </body>

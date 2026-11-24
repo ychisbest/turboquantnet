@@ -1,0 +1,10 @@
+# TurboQuant.net (https://turboquant.net)
+
+> Independent technical analysis, paper walkthrough, and engine integration status guide for Google Research's TurboQuant (arXiv:2504.19874), PolarQuant (arXiv:2502.02617), and QJL KV-cache compression. Unofficial.
+
+## Core Guides
+
+- [TurboQuant Overview & Benchmarks](https://turboquant.net/)
+- [TurboQuant Paper Explained (PolarQuant + QJL)](https://turboquant.net/paper/)
+- [How to Use TurboQuant (vLLM, MLX, llama.cpp, LM Studio Status)](https://turboquant.net/guide/)
+- [About TurboQuant.net](https://turboquant.net/about/)

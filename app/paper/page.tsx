@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 
+import { AdBanner } from "@/components/ad-banner"
 import { FaqJsonLd } from "@/components/faq-json-ld"
 import { SitePageShell } from "@/components/site-page-shell"
 
@@ -101,6 +102,8 @@ export default function PaperPage() {
               / ANN style workloads).
             </p>
           </div>
+
+          <AdBanner />
 
           <div className="rounded-2xl border border-border bg-card/30 p-8">
             <h2 className="text-2xl font-semibold text-foreground">How it works (plain language)</h2>
