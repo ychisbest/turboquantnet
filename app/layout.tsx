@@ -47,7 +47,10 @@ export default function RootLayout({
           {clarityScript}
         </Script>
         <Script id="adsterra-smartlink" strategy="afterInteractive">
-          {`(function(){var u="https://araplhn.org/4/4cb420440e85fd3be4a3e8294e18fb0d",k="__tq_sl_ts",ck="__tq_sl_c";document.addEventListener("click",function(e){var el=e.target&&e.target.closest&&e.target.closest("a,button");if(!el)return;try{var c=Number(sessionStorage.getItem(ck)||"0")+1;sessionStorage.setItem(ck,String(c));if(c<2)return;var now=Date.now(),last=Number(localStorage.getItem(k)||"0");if(now-last<12*3600*1000)return;localStorage.setItem(k,String(now));window.open(u,"_blank","noopener,noreferrer");}catch(_){}},{passive:true});})();`}
+          {`(function(){var u="https://araplhn.org/4/4cb420440e85fd3be4a3e8294e18fb0d",k="__tq_sl_ts",ck="__tq_sl_c";document.addEventListener("click",function(e){var el=e.target&&e.target.closest&&e.target.closest("a,button");if(!el||el.closest("[data-no-smartlink]"))return;try{var c=Number(sessionStorage.getItem(ck)||"0")+1;sessionStorage.setItem(ck,String(c));if(c<2)return;var now=Date.now(),last=Number(localStorage.getItem(k)||"0");if(now-last<12*3600*1000)return;localStorage.setItem(k,String(now));window.open(u,"_blank","noopener,noreferrer");}catch(_){}},{passive:true});})();`}
+        </Script>
+        <Script id="evidence-telemetry" strategy="afterInteractive">
+          {`(function(){try{var p=JSON.stringify({site:"turboquant.net",event:"page_view",meta:window.location.pathname,locale:"en",device:window.innerWidth<768?"mobile":"desktop"});if(navigator.sendBeacon){navigator.sendBeacon("https://evidence-telemetry.ych8398527.workers.dev/e",new Blob([p],{type:"application/json"}));}}catch(_){}})();`}
         </Script>
         {children}
         <Analytics />

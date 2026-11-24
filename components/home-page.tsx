@@ -1,6 +1,7 @@
 import { AdBanner } from "@/components/ad-banner"
 import { Background } from "@/components/background"
 import { CorePrinciple } from "@/components/core-principle"
+import { DevProbe } from "@/components/dev-probe"
 import { ExpertCommentary } from "@/components/expert-commentary"
 import { FAQ } from "@/components/faq"
 import { FaqJsonLd } from "@/components/faq-json-ld"
@@ -65,6 +66,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <Future content={content.future} />
       <FAQ content={content.faq} />
       <Resources content={content.resources} />
+      <DevProbe />
       <Footer content={content.footer} />
     </main>
   )

@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 import { AdBanner } from "@/components/ad-banner"
+import { DevProbe } from "@/components/dev-probe"
 import { FaqJsonLd } from "@/components/faq-json-ld"
 import { SitePageShell } from "@/components/site-page-shell"
 
@@ -237,6 +238,8 @@ python -m vllm.entrypoints.cli.main --help 2>/dev/null | rg -i 'kv-cache|turbo'
               </li>
             </ul>
           </div>
+
+          <DevProbe />
 
           <div className="rounded-2xl border border-border bg-card/30 p-8">
             <h2 className="text-2xl font-semibold text-foreground">FAQ</h2>
